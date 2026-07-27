@@ -2,25 +2,17 @@ class Solution {
     string str;
     int n;
     int dp[11][11][2];
-
     int solve(int idx, int cnt, bool tight) {
-        if (idx == n) return cnt;
+        if(idx == n) return cnt;
         if(dp[idx][cnt][tight] != -1) return dp[idx][cnt][tight];
-        int ub = tight ? (str[idx] - '0') : 9;
-
+        int val = 9;
+        if(tight) val = min(9, (str[idx]-'0'));
         int ans = 0;
-
-        for (int digit = 0; digit <= ub; digit++) {
-            ans += solve(
-                idx + 1,
-                cnt + (digit == 1),
-                tight && (digit == ub)
-            );
+        for(int i = 0; i <= val; i++) {
+            ans += solve(idx+1, cnt + (i == 1), tight && (i == val));
         }
-
         return dp[idx][cnt][tight] = ans;
     }
-
 public:
     int countDigitOne(int N) {
         for(int i = 0; i < 11; i++) {
@@ -29,8 +21,9 @@ public:
                 dp[i][j][1] = -1;
             }
         }
-        str = to_string(N);
-        n = str.size();
+        string s = to_string(N);
+        str = s;
+        n = s.size();
         return solve(0, 0, true);
     }
 };
