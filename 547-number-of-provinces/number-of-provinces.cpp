@@ -1,4 +1,18 @@
 class Solution {
+    void bfs(int idx, vector<int> adj[], vector<int>& vis) {
+        queue<int> q;
+        q.push(idx);
+        vis[idx] = 1;
+        
+        while(!q.empty()) {
+            int node = q.front();
+            q.pop();
+            vis[node] = 1;
+            for(auto it: adj[node]) {
+                if(vis[it] == 0) q.push(it);
+            }
+        }
+    }
     void dfs(int node, vector<int> adj[], vector<int>& vis) {
         if(vis[node]) return;
         vis[node] = 1;
@@ -23,7 +37,7 @@ public:
         for(int i = 0; i <= n; i++) {
             if(vis[i] == 0) {
                 cnt++;
-                dfs(i, adj, vis);
+                bfs(i, adj, vis);
             }
         }
         return cnt;
