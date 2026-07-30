@@ -10,6 +10,7 @@ class Solution {
             vis[node] = 1;
             for(auto it: adj[node]) {
                 if(vis[it] == 0) q.push(it);
+                vis[it] = 1;
             }
         }
     }
